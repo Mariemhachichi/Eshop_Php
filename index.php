@@ -1,3 +1,21 @@
+<?php
+//1 cnx vers la bd
+
+//2 creation de la req
+
+//3 execution req
+
+//4 rslt Req
+
+
+
+
+?>
+
+
+
+
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
