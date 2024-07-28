@@ -1,4 +1,4 @@
-<?php
+<!-- <?php
 $user = "root";
 $pass = ""; 
 $dbname = "ecommerce";
@@ -19,5 +19,4 @@ try {
     // Gestion des erreurs de connexion
     throw new \PDOException($e->getMessage(), (int)$e->getCode());
 }
-?>
-
+?> -->

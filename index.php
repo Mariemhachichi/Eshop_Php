@@ -1,63 +1,55 @@
 <?php
-//1 cnx vers la bd
+// 1. Connexion à la base de données
+$user = "root";
+$pass = ""; 
+$dbname = "ecommerce";
+$host = "localhost";
 
-//2 creation de la req
+$dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
 
-//3 execution req
+try {
+    // Création de l'instance PDO
+    $pdo = new PDO($dsn, $user, $pass, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, // Gestion des erreurs par exception
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, // Mode de récupération des résultats par défaut
+        PDO::ATTR_EMULATE_PREPARES => false, // Désactivation de l'émulation des requêtes préparées
+    ]);
+} catch (\PDOException $e) {
+    // Gestion des erreurs de connexion
+    throw new \PDOException($e->getMessage(), (int)$e->getCode());
+}
 
-//4 rslt Req
+// 2. Création de la requête
+$requette = "SELECT * FROM categorie";
 
+try {
+    // 3. Exécution de la requête
+    $resultat = $pdo->query($requette);
 
-
-
+    // 4. Récupération des résultats
+    $categories = $resultat->fetchAll();
+} catch (\PDOException $e) {
+    // Gestion des erreurs de requête SQL
+    echo "Erreur lors de l'exécution de la requête : " . $e->getMessage();
+    $categories = [];
+}
 ?>
 
-
-
-
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script defer src="js/bootstrap.bundle.js"></script>
     <title>E-Shop</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    </head>
+</head>
 <body>
-     <!-- Navbar-->
-     <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="index.html">E-Shop</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="index.html">Home</a>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  Catégorie 
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Catégorie 1</a></li>
-                  <li><a class="dropdown-item" href="#">Catégorie 2</a></li>
-                  <li><a class="dropdown-item" href="#">Catégorie 3</a></li>
-                </ul>
-              </li>
-               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="connexion.html">Se connecter</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="registre.html">S'inscrire </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-      <!-- Fin Navbar-->
-      <!-- Les Produits-->
+<!-- navbar -->
+<?php
+include "inc/header.php";
+?>
+      <!-- Les Produits -->
       <div class="container my-5">
         <div class="row">
             <div class="col-lg-3 col-md-6 mb-4">
@@ -101,51 +93,45 @@
                 </div>
             </div>
         </div>
-    </div>   
-      </div>
-    <!--Footer-->
-        <footer class="bg-dark text-white py-4">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-3 mb-3">
-                        <h5>About Us</h5>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestib ulum mauris.</p>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <h5>Quick Links</h5>
-                        <ul class="list-unstyled">
-                            <li><a href="#" class="text-white">Home</a></li>
-                            <li><a href="#" class="text-white">About</a></li>
-                            <li><a href="#" class="text-white">Services</a></li>
-                            <li><a href="#" class="text-white">Contact</a></li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <h5>Contact Us</h5>
-                        <p>
-                            123 Street Name<br>
-                            City, State, 12345<br>
-                            Email: info@example.com<br>
-                            Phone: (123) 456-7890
-                        </p>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <h5>Follow Us</h5>
-                        <a href="#" class="text-white mr-2"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-white mr-2"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="text-white mr-2"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="text-white"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
+    </div>
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <h5>About Us</h5>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris tempus vestibulum mauris.</p>
                 </div>
-                <div class="text-center pt-3">
-                    <p>&copy; 2024 Your Company. All rights reserved.</p>
+                <div class="col-md-3 mb-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Home</a></li>
+                        <li><a href="#" class="text-white">About</a></li>
+                        <li><a href="#" class="text-white">Services</a></li>
+                        <li><a href="#" class="text-white">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <h5>Contact Us</h5>
+                    <p>
+                        123 Street Name<br>
+                        City, State, 12345<br>
+                        Email: info@example.com<br>
+                        Phone: (123) 456-7890
+                    </p>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <h5>Follow Us</h5>
+                    <a href="#" class="text-white mr-2"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-white mr-2"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-white mr-2"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
-        </footer>
-    
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
-    </body>
-    </html>
+            <div class="text-center pt-3">
+                <p>&copy; 2024 Your Company. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
