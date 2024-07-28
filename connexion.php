@@ -1,10 +1,26 @@
+<?php
+include 'inc/functions.php';
+
+// Initialisation de la variable $categories
+$categories = [];
+
+// Appel de la fonction et récupération des catégories
+try {
+    $categories = getallCategories();
+} catch (Exception $e) {
+    // Gérer les erreurs si nécessaire
+    echo "Erreur lors de la récupération des catégories : " . $e->getMessage();
+}
+?>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <script defer src="js/bootstrap.bundle.js"></script>
     <title>E-Shop</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    </head>
+   </head>
 <body>
     <!-- navbar -->
 <?php
@@ -64,10 +80,5 @@ include "inc/header.php";
                 </div>
             </div>
         </footer>
-    
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-        <script src="https://kit.fontawesome.com/a076d05399.js"></script>
     </body>
     </html>

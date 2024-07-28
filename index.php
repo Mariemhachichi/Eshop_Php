@@ -1,37 +1,22 @@
 <?php
-// 1. Connexion à la base de données
-$user = "root";
-$pass = ""; 
-$dbname = "ecommerce";
-$host = "localhost";
+include 'inc/functions.php';
 
-$dsn = "mysql:host=$host;dbname=$dbname;charset=utf8mb4";
+// Initialisation de la variable $categories
+$categories = [];
 
+// Appel de la fonction et récupération des catégories
 try {
-    // Création de l'instance PDO
-    $pdo = new PDO($dsn, $user, $pass, [
-        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, // Gestion des erreurs par exception
-        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC, // Mode de récupération des résultats par défaut
-        PDO::ATTR_EMULATE_PREPARES => false, // Désactivation de l'émulation des requêtes préparées
-    ]);
-} catch (\PDOException $e) {
-    // Gestion des erreurs de connexion
-    throw new \PDOException($e->getMessage(), (int)$e->getCode());
+    $categories = getallCategories();
+} catch (Exception $e) {
+    // Gérer les erreurs si nécessaire
+    echo "Erreur lors de la récupération des catégories : " . $e->getMessage();
 }
 
-// 2. Création de la requête
-$requette = "SELECT * FROM categorie";
-
+$produits = [];
 try {
-    // 3. Exécution de la requête
-    $resultat = $pdo->query($requette);
-
-    // 4. Récupération des résultats
-    $categories = $resultat->fetchAll();
-} catch (\PDOException $e) {
-    // Gestion des erreurs de requête SQL
-    echo "Erreur lors de l'exécution de la requête : " . $e->getMessage();
-    $categories = [];
+    $produits = getallProduct();
+} catch (Exception $e) {
+    echo "Erreur lors de la récupération des produits : " . $e->getMessage();
 }
 ?>
 
@@ -52,46 +37,20 @@ include "inc/header.php";
       <!-- Les Produits -->
       <div class="container my-5">
         <div class="row">
-            <div class="col-lg-3 col-md-6 mb-4">
+<?php
+foreach ($produits as $produit) {
+    echo '  <div class="col-lg-3 col-md-6 mb-4">
                 <div class="card">
                     <img src="https://via.placeholder.com/150" class="card-img-top" alt="Card image">
                     <div class="card-body">
-                        <h5 class="card-title">Card Title 1</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <h5 class="card-title">'.$produit['nom'].'</h5>
+                        <p class="card-text">'.$produit['description'].'</p>
+                        <a href="#" class="btn btn-primary ">Afficher</a>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-4">
-                <div class="card">
-                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Card image">
-                    <div class="card-body">
-                        <h5 class="card-title">Card Title 2</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-4">
-                <div class="card">
-                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Card image">
-                    <div class="card-body">
-                        <h5 class="card-title">Card Title 3</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-4">
-                <div class="card">
-                    <img src="https://via.placeholder.com/150" class="card-img-top" alt="Card image">
-                    <div class="card-body">
-                        <h5 class="card-title">Card Title 4</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
+            </div>';
+}
+?>
         </div>
     </div>
     <!-- Footer -->
