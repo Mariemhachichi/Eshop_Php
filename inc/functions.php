@@ -165,3 +165,30 @@ function ConnectVisiteur($data) {
         return false; // Retourne false si aucun visiteur n'est trouvé
     }
 }
+
+    function ConnectAdmin($data){
+        $pdo = connect();
+    
+        // 2. Création de la requête
+        $requette = "SELECT * FROM adminstrateur WHERE email = :email AND mp = :mp";
+        
+        // Préparation de la requête
+        $stmt = $pdo->prepare($requette);
+        
+        // Liaison des paramètres
+        $stmt->bindParam(':email', $data['email']);
+        $stmt->bindParam(':mp', $data['mp']);
+        
+        // 3. Exécution de la requête
+        $stmt->execute();
+        
+        // 4. Vérification du résultat
+        $visiteur = $stmt->fetch(PDO::FETCH_ASSOC);
+        
+        if ($visiteur) {
+            return $visiteur; // Retourne les informations du visiteur si trouvé
+        } else {
+            return false; // Retourne false si aucun visiteur n'est trouvé
+        }
+    }
+  

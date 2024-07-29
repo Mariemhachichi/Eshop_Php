@@ -22,12 +22,22 @@
                     ?>
                 </ul>
               </li>
-              <li class="nav-item">
+
+              <?php 
+              if(isset($_SESSION['nom'])){
+                print '<li class="nav-item">
+                <a class="nav-link" href="profile.php">profile</a>
+              </li>';
+              }else{
+                print' 
+                 <li class="nav-item">
                 <a class="nav-link" href="connexion.php">Se connecter</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="registre.php">S'inscrire</a>
-              </li>
+                <a class="nav-link" href="registre.php">inscription</a>
+              </li>';
+              }  ?>
+            
             </ul>
           </div>
         </div>

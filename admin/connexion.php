@@ -4,34 +4,21 @@ if (isset($_SESSION["nom"])) {
     header('Location:profile.php');
 }
 
-include 'inc/functions.php';
-
-// Initialisation de la variable $categories
-$categories = [];
-
-// Appel de la fonction et récupération des catégories
-try {
-    $categories = getallCategories();
-} catch (Exception $e) {
-    // Gérer les erreurs si nécessaire
-    echo "Erreur lors de la récupération des catégories : " . $e->getMessage();
-}
+include '../inc/functions.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') { // Vérifier si le formulaire est soumis
     // Démarrer la session
     session_start();
     
     // Vérifier les identifiants utilisateur
-    $visiteur = ConnectVisiteur($_POST);
+    $visiteur = ConnectAdmin($_POST);
 
     if (is_array($visiteur)&&count($visiteur)>0) { // Vérifier si la connexion a réussi
         // Définir les variables de session
         $_SESSION['email'] = $visiteur['email'];
         $_SESSION['nom'] = $visiteur['nom'];
-        $_SESSION['prenom'] = $visiteur['prenom'];
         $_SESSION['mp'] = $visiteur['mp'];
-        $_SESSION['telephone'] = $visiteur['telephone'];
-        
+  
         echo "<script>alert('Connexion réussie'); window.location.href='profile.php';</script>";
     } else {
         echo "<script>alert('Identifiants incorrects');</script>";
@@ -44,17 +31,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { // Vérifier si le formulaire est s
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <script defer src="js/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <script defer src="../js/bootstrap.bundle.js"></script>
     <title>E-Shop</title>
 </head>
 <body>
-    <!-- navbar -->
-    <?php include "inc/header.php"; ?>
-    <!-- Fin Navbar-->
+
     <!-- Form -->
     <div class="container my-5">
-        <h2 class="mb-4">Connexion</h2>
+        <h2 class="mb-4">Espace Admin : Connexion</h2>
         <form action="" method="post">
             <div class="form-group col-md-6 my-4">
                 <input type="email" name="email" class="form-control" id="email" placeholder="Email" required>
