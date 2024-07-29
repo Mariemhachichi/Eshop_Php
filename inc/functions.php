@@ -91,3 +91,24 @@ function searchProduits($keyword){
          $produits = [];
      }
 }
+
+//afficher pdt
+function getProduitById($id){
+$pdo = connect();
+     // 2. Création de la requête
+     $requette = "SELECT * FROM produit where id=$id";
+     try {
+        // 3. Exécution de la requête
+        $resultat = $pdo->query($requette);
+    
+        // 4. Récupération des résultats
+        $produit = $resultat->fetch();
+        
+    return $produit;
+    
+    } catch (\PDOException $e) {
+        // Gestion des erreurs de requête SQL
+        echo "Erreur lors de l'exécution de la requête : " . $e->getMessage();
+        $produit = [];
+    }
+}

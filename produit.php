@@ -3,7 +3,7 @@ include 'inc/functions.php';
 
 // Initialisation des variables
 $categories = [];
-$produits = [];
+
 
 // Appel de la fonction et récupération des catégories
 try {
@@ -13,31 +13,11 @@ try {
     echo "Erreur lors de la récupération des catégories : " . htmlspecialchars($e->getMessage());
 }
 
-// Traitement de la recherche de produits
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    if (isset($_POST['Rechercher']) && !empty($_POST['Rechercher'])) {
-        // Recherche les produits si un terme de recherche est fourni
-        try {
-            $produits = searchProduits($_POST['Rechercher']);
-        } catch (Exception $e) {
-            echo "Erreur lors de la recherche des produits : " . htmlspecialchars($e->getMessage());
-        }
-    } else {
-        // Récupère tous les produits si aucun terme de recherche n'est fourni
-        try {
-            $produits = getallProduct();
-        } catch (Exception $e) {
-            echo "Erreur lors de la récupération des produits : " . htmlspecialchars($e->getMessage());
-        }
-    }
-} else {
-    // Récupère tous les produits si la page est chargée sans soumission du formulaire
-    try {
-        $produits = getallProduct();
-    } catch (Exception $e) {
-        echo "Erreur lors de la récupération des produits : " . htmlspecialchars($e->getMessage());
-    }
+//Pdt
+if (isset($_GET['id'])){
+   $produit = getProduitById($_GET['id']);
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -53,35 +33,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <!-- navbar -->
 <?php include "inc/header.php"; ?>
 
-
-<!-- search -->
-<div class="container my-5 col-md-3">
-    <form class="input-group" action="index.php" method="POST">
-        <input type="search" class="form-control rounded" placeholder="Rechercher..." aria-label="Rechercher" aria-describedby="Rechercher" name="Rechercher"/>
-        <button type="submit" class="btn btn-outline-primary" data-mdb-ripple-init>Rechercher</button>
-    </form>
-</div>
-<!-- Les Produits -->
-<div class="container my-5">
+<!-- Le Produit -->
+<div class="container my-4 offset-5">
     <div class="row">
-        <?php
-        if (!empty($produits)) {
-            foreach ($produits as $produit) {
-                echo '<div class="col-lg-3 col-md-6 mb-4">
-                        <div class="card">
-                            <img src="https://via.placeholder.com/150" class="card-img-top" alt="Card image">
-                            <div class="card-body">
-                                <h5 class="card-title">' . htmlspecialchars($produit['nom']) . '</h5>
-                                <p class="card-text">' . htmlspecialchars($produit['description']) . '</p>
-                                <a href="produit.php?id='.$produit['id'].'" class="btn btn-primary">Afficher</a>
-                            </div>
-                        </div>
-                    </div>';
-            }
-        } else {
-            echo '<p>Aucun produit trouvé.</p>';
-        }
-        ?>
+    <div class="card" style="width: 20rem;">
+  <img class="card-img-top" src="..." alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title"><?php echo $produit['nom']?></h5>
+    <p class="card-text"><?php echo $produit['description']?>/p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"><?php echo $produit['prix']?> DT</li>
+    <li class="list-group-item"><?php echo $produit['categorie']?></li>
+
+  </ul>
+
+</div>
     </div>
 </div>
 

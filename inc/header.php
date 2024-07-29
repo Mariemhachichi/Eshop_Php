@@ -33,10 +33,4 @@
         </div>
       </nav>
       <!-- Fin Navbar -->
-<!-- search -->
-<div class="container my-5 col-md-3">
-    <form class="input-group" action="index.php" method="POST">
-        <input type="search" class="form-control rounded" placeholder="Rechercher..." aria-label="Rechercher" aria-describedby="Rechercher" name="Rechercher"/>
-        <button type="submit" class="btn btn-outline-primary" data-mdb-ripple-init>Rechercher</button>
-    </form>
-</div>
+
