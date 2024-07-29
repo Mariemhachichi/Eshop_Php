@@ -15,6 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { // Vérifier si le formulaire est s
 
     if (is_array($visiteur)&&count($visiteur)>0) { // Vérifier si la connexion a réussi
         // Définir les variables de session
+        $_SESSION['id'] = $visiteur['id'];
         $_SESSION['email'] = $visiteur['email'];
         $_SESSION['nom'] = $visiteur['nom'];
         $_SESSION['mp'] = $visiteur['mp'];
@@ -52,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { // Vérifier si le formulaire est s
     </div>
     
     <!--Footer-->
-    <footer class="bg-dark text-white py-4">
+    <!-- <footer class="bg-dark text-white py-4">
         <div class="container">
             <div class="row">
                 <div class="col-md-3 mb-3">
@@ -89,6 +90,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') { // Vérifier si le formulaire est s
                 <p>&copy; 2024 Your Company. All rights reserved.</p>
             </div>
         </div>
-    </footer>
+    </footer> -->
 </body>
 </html>

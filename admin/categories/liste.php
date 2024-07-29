@@ -1,5 +1,7 @@
 <?php
 session_start();
+include "../../inc/functions.php";
+$categories = getallCategories();
 ?>
 <!doctype html>
 <html lang="en">
@@ -27,7 +29,7 @@ session_start();
       <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
       <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-          <a class="nav-link" href="../deconnexion.php">Deconnexion</a>
+          <a class="nav-link" href="../../deconnexion.php">Deconnexion</a>
         </li>
       </ul>
     </nav>
@@ -62,7 +64,7 @@ session_start();
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="../profile.php">
                   <span data-feather="bar-chart-2"></span>
                   Profile
                 </a>
@@ -75,13 +77,7 @@ session_start();
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">Liste des Categories</h1>
             <div>
-                <?php 
-                if (isset($_SESSION['nom'])) {
-                    echo htmlspecialchars($_SESSION['nom']);
-                } else {
-                    echo "Nom non défini";
-                }
-                ?>
+           <a  class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Ajouter</a>
             </div>
            
           </div>
@@ -96,21 +92,64 @@ session_start();
     </tr>
   </thead>
   <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>Mark</td>
-      <td>Otto</td>
+
+  <?php
+    $i=0;
+  foreach($categories as $c){
+    $i++;
+    print'    <tr>
+      <th scope="row">'.$i.'</th>
+      <td>'.$c['nom'].'</td>
+      <td>'.$c['description'].'</td>
       <td><a href="" class="btn btn-success" >Modifier</a>
-      <td><a href="" class="btn btn-danger">Supprimer</a>
+      <a href="" class="btn btn-danger">Supprimer</a>
     </td>
-    </tr>
+    </tr>';
+  }
+  ?>
+
+
   </tbody>
 </table>
+
+
           </div>
         </main>
       </div>
     </div>
 
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ajout categorie</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="ajout.php" method="post">
+            <div class="form-group"> 
+                <input type="text" name="nom" class="form-control" placeholder="Nom de categorie ..."/>
+            </div>
+            <div class="form-group">
+                <textarea  name="description" class="form-control" placeholder="Description de categorie..."></textarea>
+            </div>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->

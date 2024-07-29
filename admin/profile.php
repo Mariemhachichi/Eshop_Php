@@ -44,7 +44,7 @@ session_start();
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="categories/liste.php">
                   <span data-feather="file"></span>
                   Categories
                 </a>
@@ -76,14 +76,14 @@ session_start();
             <h1 class="h2">Profil</h1>
             <div>
                 <?php 
-                echo $_SESSION['nom'];
+                if (isset($_SESSION['nom'])) {
+                    echo htmlspecialchars($_SESSION['nom']);
+                } else {
+                    echo "Nom non défini";
+                }
                 ?>
             </div>
-
-
-
           </div>
-
         </main>
       </div>
     </div>
