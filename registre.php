@@ -1,4 +1,9 @@
 <?php
+session_start();
+if (isset($_SESSION["nom"])) {
+    header('Location:profile.php');
+}
+
 include 'inc/functions.php';
 
 // Initialisation de la variable $categories
@@ -10,6 +15,12 @@ try {
 } catch (Exception $e) {
     // Gérer les erreurs si nécessaire
     echo "Erreur lors de la récupération des catégories : " . $e->getMessage();
+}
+
+
+//registre
+if (!empty($_POST)){
+    AddVisiteur($_POST);
 }
 ?>
 
@@ -31,23 +42,23 @@ include "inc/header.php";
       <!-- form -->
       <div class="container my-5">
         <h2 class="mb-4">Formulaire d'Inscription</h2>
-        <form>
+        <form action="registre.php" method="post">
             <div class="form-row">
                 <div class="form-group col-md-6 my-4">
-                    <input type="text" class="form-control" id="firstName" placeholder="Prénom">
+                    <input type="text" name="prenom" class="form-control" id="firstName" placeholder="Prénom">
                 </div>
                 <div class="form-group col-md-6 my-4">
-                    <input type="text" class="form-control" id="lastName" placeholder="Nom">
+                    <input type="text" name="nom" class="form-control" id="lastName" placeholder="Nom">
                 </div>
                 <div class="form-group col-md-6 my-4">
-                    <input type="text" class="form-control" id="lastName" placeholder="Télephone">
+                    <input type="text" name="tel" class="form-control" id="lastName" placeholder="Télephone">
                 </div>
             </div>
             <div class="form-group col-md-6 my-4">
-                <input type="email" class="form-control" id="email" placeholder="Email">
+                <input type="email" name="email" class="form-control" id="email" placeholder="Email">
             </div>
             <div class="form-group col-md-6 my-4">
-                <input type="password" class="form-control" id="password" placeholder="Mot de Passe">
+                <input type="password" name="pwd" class="form-control" id="password" placeholder="Mot de Passe">
             </div>
             <button type="submit" class="btn btn-primary">S'inscrire</button>
         </form>

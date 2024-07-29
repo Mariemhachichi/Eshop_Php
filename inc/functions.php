@@ -112,3 +112,56 @@ $pdo = connect();
         $produit = [];
     }
 }
+
+function AddVisiteur($data){
+    $pdo = connect();
+    
+    // 2. Création de la requête
+    $requette = "INSERT INTO visiteur(prenom, nom, telephone, email, mp) VALUES(:prenom, :nom, :tel, :email, :pwd)";
+    
+    // Préparation de la requête
+    $stmt = $pdo->prepare($requette);
+    
+    // Liaison des paramètres
+    $stmt->bindParam(':prenom', $data['prenom']);
+    $stmt->bindParam(':nom', $data['nom']);
+    $stmt->bindParam(':tel', $data['tel']);
+    $stmt->bindParam(':email', $data['email']);
+    $stmt->bindParam(':pwd', $data['pwd']);
+    
+    // 3. Exécution de la requête
+    $resultat = $stmt->execute();
+    
+    if ($resultat) {
+        echo "<script>alert('Enregistrement effectué avec succès.');</script>";
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function ConnectVisiteur($data) {
+    $pdo = connect();
+    
+    // 2. Création de la requête
+    $requette = "SELECT * FROM visiteur WHERE email = :email AND mp = :mp";
+    
+    // Préparation de la requête
+    $stmt = $pdo->prepare($requette);
+    
+    // Liaison des paramètres
+    $stmt->bindParam(':email', $data['email']);
+    $stmt->bindParam(':mp', $data['mp']);
+    
+    // 3. Exécution de la requête
+    $stmt->execute();
+    
+    // 4. Vérification du résultat
+    $visiteur = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+    if ($visiteur) {
+        return $visiteur; // Retourne les informations du visiteur si trouvé
+    } else {
+        return false; // Retourne false si aucun visiteur n'est trouvé
+    }
+}
